@@ -10,4 +10,4 @@ class ProductionLine:
         return
         
     def get_orders(self):
-        return
+        return self.__orders
