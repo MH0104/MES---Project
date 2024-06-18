@@ -7,17 +7,25 @@ class ProductionOrder:
         self.__produced_units = 0
 
     def get_order_number(self):
-        return
+        return self.__order_number
 
     def start(self):
-        return
+        if self.__status == "created":
+            self.__status = "in progress"
+        else:
+            raise ValueError("Order is not in a state that can be started")
 
     def finish(self):
-        return
+        if self.__status == "in progress":
+            self.__status = "finished"
+        else:
+            raise ValueError("Order is not in a state that can be finished")
 
     def produce(self, units):
-        return
+        if self.__status != "in progress":
+            raise ValueError("Order must be in progress to produce units")
+        else:
+            self.__produced_units += units
 
     def get_production_efficiency(self):
-
         return round((self.__produced_units / self.__quantity) * 100, 2)
