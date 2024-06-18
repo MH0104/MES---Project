@@ -81,6 +81,6 @@ get_orders(self)
 📋 Gibt alle Aufträge der Produktionslinie zurück.
 
 <h2>Anforderungen</h2>
-- Python 🐍
+Python 🐍
 
-- Arbeiten nach SCRUM 🚀
+Arbeiten nach SCRUM 🚀
