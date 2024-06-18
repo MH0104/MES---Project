@@ -10,4 +10,4 @@ class mes_utils:
 
     @staticmethod
     def calculate_production_efficiency(order):
-        return
+        return order.get_production_efficiency()
