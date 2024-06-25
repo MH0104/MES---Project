@@ -2,13 +2,28 @@ import ProductionOrder,  ProductionLine, mes_utils
 
 class MES:
     def __init__(self):
-        return
-
+        self.__production_lines = []
+    # Besprechungsbedarf, da redundanter Code
     def add_production_line(self, name):
-        print(name)
+        i = 0
+        while True:
+            try:
+                new_production_line_name = str(name)
+                if len(self.__production_lines) > 0:
+                    for production_lines in self.__production_lines:
+                        production_line = self.__production_lines[i]
+                        comparison_name = production_line.get_production_line_name()
+                        if new_production_line_name == comparison_name:
+                            raise ValueError(f"Production line '{comparison_name}' already exist. Please enter a different name.")
+                        i += 1
+                break
+            except TypeError:
+                print(f"'{name}' is invalid. Name must be a string. Please try again.")
+        new_production_line = ProductionLine(new_production_line_name)
+        self.__production_lines.add(new_production_line)
+        print(f"New production line '{new_production_line_name}' was successfully created.")
 
-    def create_production_order(self, production_line_name, order_number:int, product_name, quantity):
-
+    def create_production_order(self, production_line_name:str, order_number:int, product_name, quantity):
         if not production_line:
             raise ValueError(f"Production line '{production_line_name}' does not exist")
         order = ProductionOrder(order_number, product_name, quantity)
@@ -46,10 +61,31 @@ class MES:
 
     
     def get_production_lines(self):
-        return
-
+        i = 0
+        for production_lines in self.__production_lines:
+            production_line = self.__production_lines[i]
+            production_line_name = production_line.get_production_line_name()
+            i+=1
+            print(f"Production line No. {i}: {production_line_name}")
 
     def get_production_line(self, name):
+        i = 0
+        return_counter = False
+        for production_lines in self.__production_lines:
+            production_line = self.__production_lines[i]
+            comparison_name = production_line.get_production_line_name()
+            if name == comparison_name:
+                return_counter = True
+                return production_line
+            i += 1
+        if return_counter == False:
+            answer = input(f'''No production line called "{name}" exists. Do you want to create this production line?
+Press "Y" to create this production line or press any other key to cancel: ''')
+            answer = answer.upper()
+            if answer == "Y":
+                self.add_production_line(name)
+            else:
+                print("Draining was stopped.")
         return
 
 #from mes import MES, ProductionOrder, ProductionLine, mes_utils
