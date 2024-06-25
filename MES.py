@@ -94,23 +94,23 @@ Press "Y" to create this production line or press any other key to cancel: ''')
 mes = MES()
 
 # Füge eine Produktionslinie hinzu
-mes.add_production_line("Produktionslinie 1")
+mes.add_production_line("ProductionLine 1")
 
 # Erstelle eine Bestellung
-mes.create_production_order("Produktionslinie 1", 1001, "Produkt 1", 100)
+mes.create_production_order("ProductionLine 1", 1001, "Product 1", 100)
 
 # Starte den Produktionsauftrag
-mes.start_production_order("Produktionslinie 1", 1001)
+mes.start_production_order("ProductionLine 1", 1001)
 
 # Produziere Einheiten für einen Auftrag
-mes.produce_units("Produktionslinie 1", 1001, 50)
+mes.produce_units("ProductionLine 1", 1001, 50)
 
 # Beende den Produktionsauftrag
-mes.finish_production_order("Produktionslinie 1", 1001)
+mes.finish_production_order("ProductionLine 1", 1001)
 
 # Berechne die Produktionseffizienz des Produktionsauftrags
 #order = mes_utils.get_order_by_number(mes.production_lines["Produktionslinie 2"], 1001)
-order = mes_utils.get_order_by_number(mes.get_production_line("Produktionslinie 1"), 1001)
+order = mes_utils.get_order_by_number(mes.get_production_line("ProductionLine 1"), 1001)
 efficiency = mes_utils.calculate_production_efficiency(order)
 
-print(f"Die Produktionseffizienz des Auftrags ist {efficiency}%.")
+print(f"The efficiency is {efficiency}%.")
