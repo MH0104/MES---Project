@@ -80,7 +80,7 @@ class MES:
             i += 1
         if return_counter == False:
             answer = input(f'''No production line called "{name}" exists. Do you want to create this production line?
-Press "Y" to create this production line or press any other key to cancel: ''')
+                Press "Y" to create this production line or press any other key to cancel: ''')
             answer = answer.upper()
             if answer == "Y":
                 self.add_production_line(name)
