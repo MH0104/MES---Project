@@ -96,24 +96,51 @@ class MES:
 # Erstelle eine MES-Instanz
 mes = MES()
 
-# Füge eine Produktionslinie hinzu
-mes.add_production_line("ProductionLine 1")
+print("Welcome to MES")
+line = input("Type in your new production line: ")
 
-# Erstelle eine Bestellung
-mes.create_production_order("ProductionLine 1", 1001, "Product 1", 100)
+try:
+    # Füge eine Produktionslinie hinzu
+    mes.add_production_line(line)
+except:
+    line2 = input("Type in your new production line: ")
+    mes.add_production_line(line2)
 
-# Starte den Produktionsauftrag
-mes.start_production_order("ProductionLine 1", 1001)
+print("Let´s create an order")
+orderline = input("which production line do you want to create your order on? : ")
+ordernumb = input("Whats the order number: ")
+ordername = input("Whats the product name?: ")
+quantity = input("Tell me the quantity: ")
 
-# Produziere Einheiten für einen Auftrag
-mes.produce_units("ProductionLine 1", 1001, 50)
+try:
+    # Erstelle eine Bestellung
+    mes.create_production_order(orderline, ordernumb, ordername, quantity)
+except:
+    orderline = input("which production line do you want to create your order on? : ")
+    ordernumb = input("Whats the order number: ")
+    ordername = input("Whats the product name?: ")
+    quantity = input("Tell me the quantity: ")   
+    mes.create_production_order(orderline, ordernumb, ordername, quantity)
 
-# Beende den Produktionsauftrag
-mes.finish_production_order("ProductionLine 1", 1001)
 
-# Berechne die Produktionseffizienz des Produktionsauftrags
-#order = mes_utils.get_order_by_number(mes.production_lines["Produktionslinie 2"], 1001)
-order = mes_utils.get_order_by_number(mes.get_production_line("ProductionLine 1"), 1001)
-efficiency = mes_utils.calculate_production_efficiency(order)
+start = input("Type (1) if want to start the order, (2) to create a new productionline or (3) for create new order: ")
+if start == "1":
+    # Starte den Produktionsauftrag
+    mes.start_production_order("ProductionLine 1", 1001)
 
-print(f"The efficiency is {efficiency}%.")
+    # Produziere Einheiten für einen Auftrag
+    mes.produce_units("ProductionLine 1", 1001, 50)
+
+    # Beende den Produktionsauftrag
+    mes.finish_production_order("ProductionLine 1", 1001)
+
+    # Berechne die Produktionseffizienz des Produktionsauftrags
+    #order = mes_utils.get_order_by_number(mes.production_lines["Produktionslinie 2"], 1001)
+    order = mes_utils.get_order_by_number(mes.get_production_line("ProductionLine 1"), 1001)
+    efficiency = mes_utils.calculate_production_efficiency(order)
+
+    print(f"The efficiency is {efficiency}%.")
+elif start == "2":
+    return 0
+else:
+    return 1
