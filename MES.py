@@ -24,6 +24,7 @@ class MES:
         print(f"New production line '{new_production_line_name}' was successfully created.")
 
     def create_production_order(self, production_line_name:str, order_number:int, product_name, quantity):
+        production_line = self.get_production_line(production_line_name)
         if not production_line:
             raise ValueError(f"Production line '{production_line_name}' does not exist")
         order = ProductionOrder(order_number, product_name, quantity)
