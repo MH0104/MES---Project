@@ -22,7 +22,7 @@ class MES:
             except TypeError:
                 print(f"'{name}' is invalid. Name must be a string. Please try again.")
         new_production_line = ProductionLine(new_production_line_name)
-        self.__production_lines.add(new_production_line)
+        self.__production_lines.append(new_production_line)
         print(f"New production line '{new_production_line_name}' was successfully created.")
 
     def create_production_order(self, production_line_name:str, order_number:int, product_name, quantity):
