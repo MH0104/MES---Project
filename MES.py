@@ -91,56 +91,97 @@ class MES:
                 print("Draining was stopped.")
         return
 
-#from mes import MES, ProductionOrder, ProductionLine, mes_utils
 
 # Erstelle eine MES-Instanz
 mes = MES()
 
 print("Welcome to MES")
-line = input("Type in your new production line: ")
 
-try:
-    # Füge eine Produktionslinie hinzu
-    mes.add_production_line(line)
-except:
-    line2 = input("Type in your new production line: ")
-    mes.add_production_line(line2)
+while True:
+    try:
+        line = input("Type in your new production line: ")
+        mes.add_production_line(line)
+        print(f"Production line '{line}' added successfully.")
+        break  # Erfolgreich hinzugefügt, verlässt die Schleife
+    except ValueError as e:
+        print(f"Error: {e}. Please try again.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        continue  # Schleife fortsetzen bei Fehler
 
-print("Let´s create an order")
-orderline = input("which production line do you want to create your order on? : ")
-ordernumb = input("Whats the order number: ")
-ordername = input("Whats the product name?: ")
-quantity = input("Tell me the quantity: ")
+while True:
+    try:
+        orderline = input("Which production line do you want to create your order on?: ")
+        ordernumb = input("What's the order number?: ")
+        ordername = input("What's the product name?: ")
+        quantity = int(input("Tell me the quantity: "))  # Annahme: Die Menge ist eine Ganzzahl
 
-try:
-    # Erstelle eine Bestellung
-    mes.create_production_order(orderline, ordernumb, ordername, quantity)
-except:
-    orderline = input("which production line do you want to create your order on? : ")
-    ordernumb = input("Whats the order number: ")
-    ordername = input("Whats the product name?: ")
-    quantity = input("Tell me the quantity: ")   
-    mes.create_production_order(orderline, ordernumb, ordername, quantity)
+        mes.create_production_order(orderline, ordernumb, ordername, quantity)
+        print(f"Order {ordernumb} for product '{ordername}' with quantity {quantity} added to line '{orderline}'.")
+        break  # Erfolgreich erstellt, verlässt die Schleife
+    except ValueError as e:
+        print(f"Error: {e}. Please enter valid data.")
+    except KeyError as e:
+        print(f"Error: Production line not found: {e}. Please try again.")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        continue  # Schleife fortsetzen bei Fehler
 
 
-start = input("Type (1) if want to start the order, (2) to create a new productionline or (3) for create new order: ")
+start = input("Type (1) if you want to start the order, (2) to create a new production line, or (3) to create a new order: ")
+
 if start == "1":
-    # Starte den Produktionsauftrag
-    mes.start_production_order("ProductionLine 1", 1001)
+    try:
+        # Starte den Produktionsauftrag
+        mes.start_production_order(orderline, ordernumb)
 
-    # Produziere Einheiten für einen Auftrag
-    mes.produce_units("ProductionLine 1", 1001, 50)
+        # Produziere Einheiten für einen Auftrag
+        mes.produce_units(orderline, ordernumb, quantity)
 
-    # Beende den Produktionsauftrag
-    mes.finish_production_order("ProductionLine 1", 1001)
+        # Beende den Produktionsauftrag
+        mes.finish_production_order(orderline, ordernumb)
 
-    # Berechne die Produktionseffizienz des Produktionsauftrags
-    #order = mes_utils.get_order_by_number(mes.production_lines["Produktionslinie 2"], 1001)
-    order = mes_utils.get_order_by_number(mes.get_production_line("ProductionLine 1"), 1001)
-    efficiency = mes_utils.calculate_production_efficiency(order)
+        # Berechne die Produktionseffizienz des Produktionsauftrags
+        order = mes_utils.get_order_by_number(mes.get_production_line(orderline), ordernumb)
+        efficiency = mes_utils.calculate_production_efficiency(order)
 
-    print(f"The efficiency is {efficiency}%.")
+        print(f"The efficiency is {efficiency}%.")
+    except KeyError as e:
+        print(f"Error: Order or production line not found: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
 elif start == "2":
-    return 0
+    while True:
+        try:
+            line = input("Type in your new production line: ")
+            mes.add_production_line(line)
+            print(f"Production line '{line}' added successfully.")
+            break  # Erfolgreich hinzugefügt, verlässt die Schleife
+        except ValueError as e:
+            print(f"Error: {e}. Please try again.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            continue  # Schleife fortsetzen bei Fehler
+
+elif start == "3":
+    while True:
+        try:
+            orderline = input("Which production line do you want to create your order on?: ")
+            ordernumb = input("What's the order number?: ")
+            ordername = input("What's the product name?: ")
+            quantity = int(input("Tell me the quantity: "))  # Annahme: Die Menge ist eine Ganzzahl
+
+            mes.create_production_order(orderline, ordernumb, ordername, quantity)
+            print(f"Order {ordernumb} for product '{ordername}' with quantity {quantity} added to line '{orderline}'.")
+            break  # Erfolgreich erstellt, verlässt die Schleife
+        except ValueError as e:
+            print(f"Error: {e}. Please enter valid data.")
+        except KeyError as e:
+            print(f"Error: Production line not found: {e}. Please try again.")
+        except Exception as e:
+            print(f"An unexpected error occurred: {e}")
+            continue  # Schleife fortsetzen bei Fehler
+
 else:
-    return 1
+    print("Invalid option selected.")
