@@ -10,7 +10,7 @@ class ProductionLine:
     # Adds an order to the production line
     def add_order(self, order):
         self.__orders.append(order)
-        print("Added " + order + " to the order list")
+        print("Added " + str(order) + " to the order list")
 
     # Returns the production line name
     def get_production_line_name(self):
